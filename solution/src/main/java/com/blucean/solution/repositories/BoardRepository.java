@@ -1,7 +1,6 @@
 package com.blucean.solution.repositories;
 
 import com.blucean.solution.model.Board;
-import org.springframework.boot.autoconfigure.data.web.SpringDataWebProperties;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
