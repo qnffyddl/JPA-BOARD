@@ -1,20 +1,23 @@
 package com.blucean.solution.controller;
 
+import com.blucean.solution.controller.service.BoardService;
 import com.blucean.solution.model.Board;
 import com.blucean.solution.repositories.BoardRepository;
 import com.blucean.solution.validator.BoardValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.validation.Valid;
-import java.util.List;
 
 @Controller
 @RequestMapping("/board")
@@ -25,6 +28,9 @@ public class BoardController {
 
     @Autowired
     private BoardValidator boardValidator;
+
+    @Autowired
+    private BoardService boardService;
 
 
     @GetMapping("/list")
@@ -54,12 +60,14 @@ public class BoardController {
     }
 
     @PostMapping("/form")
-    public String greetingSubmit(@Valid Board board, BindingResult bindingResult) {
+    public String postForm(@Valid Board board, BindingResult bindingResult, Authentication authentication) {
         boardValidator.validate(board, bindingResult);
         if (bindingResult.hasErrors()) {
             return "board/form";
         }
-        boardRepository.save(board);
+        String username = authentication.getName();
+        boardService.save(username, board);
+//        boardRepository.save(board);
         return "redirect:/board/list";
     }
 
