@@ -1,6 +1,6 @@
 package com.blucean.solution.controller;
 
-import com.blucean.solution.controller.service.BoardService;
+import com.blucean.solution.service.BoardService;
 import com.blucean.solution.model.Board;
 import com.blucean.solution.repositories.BoardRepository;
 import com.blucean.solution.validator.BoardValidator;

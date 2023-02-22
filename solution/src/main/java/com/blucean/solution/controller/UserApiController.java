@@ -1,5 +1,6 @@
 package com.blucean.solution.controller;
 
+import com.blucean.solution.mapper.UserMapper;
 import com.blucean.solution.model.Board;
 import com.blucean.solution.model.User;
 import com.blucean.solution.repositories.UserRepository;
@@ -18,12 +19,21 @@ class UserApiController {
     @Autowired
     private UserRepository repository;
 
+    @Autowired
+    private UserMapper userMapper;
+
     @GetMapping("/users")
-    List<User> all() {
-        List<User> users = repository.findAll();
-        log.debug("getBoards.size() 호출전");
-        log.debug("getBoards.size() : {}", users.get(0).getBoards().size());
-        log.debug("getBoards.size() 호출후");
+    List<User> all(@RequestParam(required = false) String method, @RequestParam(required = false) String text) {
+        List<User> users = null;
+        if("query".equals(method)) {
+            users = repository.findByUsernameQuery(text);
+        } else if("nativeQuery".equals(method)) {
+            users = repository.findByUsernameNativeQuery(text);
+        } else if("mybatis".equals(method)) {
+            users = userMapper.getUsers(text);
+        } else {
+            users = repository.findAll();
+        }
         return users;
     }
 

@@ -1,6 +1,6 @@
 package com.blucean.solution.controller;
 
-import com.blucean.solution.controller.service.UserService;
+import com.blucean.solution.service.UserService;
 import com.blucean.solution.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

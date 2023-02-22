@@ -1,4 +1,4 @@
-package com.blucean.solution.controller.service;
+package com.blucean.solution.service;
 
 import com.blucean.solution.model.Role;
 import com.blucean.solution.model.User;
