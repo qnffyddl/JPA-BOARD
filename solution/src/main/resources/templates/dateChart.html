@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.js"></script>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <div style="width: 1500px; height: 1500px;">
+        <!--차트가 그려질 부분-->
+        <canvas id="myChart"></canvas>
+    </div>
+</body>
+</html>
+
+<script type="text/javascript">
+    let chartLabels = [];
+    let chartData = [];
+
+    $.getJSON("http://localhost:8080/chartList", function(data){
+        $.each(data, function(inx, obj){
+            chartLabels.push(obj.event);
+            chartData.push(obj.sales);
+        });
+
+        pieChartDraw();
+        console.log("create Chart")
+
+    });
+
+    let pieChartData = {
+        labels: chartLabels,
+        datasets: [{
+            data: chartData,
+            backgroundColor: ['rgb(255, 99, 132)', 'rgb(255, 159, 64)', 'rgb(255, 205, 86)', 'rgb(75, 192, 192)', 'rgb(54, 162, 235)', 'rgb(153, 102, 255)']
+        }]
+    };
+
+    let pieChartDraw = function () {
+        let ctx = document.getElementById('myChart').getContext('2d');
+
+        window.pieChart = new Chart(ctx, {
+            type: 'pie',
+            data: pieChartData,
+            options: {
+                responsive: false
+            }
+        });
+    };
+</script>
+</body>
+</html>
